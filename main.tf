@@ -40,23 +40,26 @@ resource "aws_instance" "main" {
     }
   }
 
-  ebs_block_device {
-    delete_on_termination = var.delete_volumes_on_termination
-    encrypted             = (var.encryption == true) ? true : false
-    kms_key_id            = (var.encryption == true) ? var.kms_key_id : null
-    device_name           = "/dev/${var.ebs_device_name}"
-    volume_type           = var.ebs_volume_type
-    volume_size           = var.ebs_volume_size
-    throughput            = var.ebs_throughput
-    iops                  = var.ebs_iops
+  dynamic "ebs_block_device" {
+    for_each = (var.ebs_volume_size != 0) ? [true] : []
+    content {
+      delete_on_termination = var.delete_volumes_on_termination
+      encrypted             = (var.encryption == true) ? true : false
+      kms_key_id            = (var.encryption == true) ? var.kms_key_id : null
+      device_name           = "/dev/${var.ebs_device_name}"
+      volume_type           = var.ebs_volume_type
+      volume_size           = var.ebs_volume_size
+      throughput            = var.ebs_throughput
+      iops                  = var.ebs_iops
 
-    tags = {
-      Name        = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-${var.ebs_device_name}-volume-${var.environment}"
-      Tenant      = var.tenant
-      Project     = var.name
-      Environment = var.environment
-      Maintainer  = "Magicorn"
-      Terraform   = "yes"
+      tags = {
+        Name        = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-${var.ebs_device_name}-volume-${var.environment}"
+        Tenant      = var.tenant
+        Project     = var.name
+        Environment = var.environment
+        Maintainer  = "Magicorn"
+        Terraform   = "yes"
+      }
     }
   }
 

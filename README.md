@@ -5,7 +5,7 @@ Magicorn made Terraform Module for AWS Provider
 ```
 module "ec2-instance" {
   source      = "magicorntech/ec2-instance/aws"
-  version     = "0.0.1"
+  version     = "0.0.2"
   tenant      = var.tenant
   name        = var.name
   environment = var.environment
@@ -41,7 +41,7 @@ module "ec2-instance" {
   # Additional Volume Configuration (only one)
   ebs_device_name = "sda2"
   ebs_volume_type = "gp2" # can be null
-  ebs_volume_size = 12    # can be null
+  ebs_volume_size = 0     # if 0 - no additional disk created
   ebs_throughput  = null  # can be null
   ebs_iops        = null  # can be null
 
