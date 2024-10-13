@@ -3,7 +3,7 @@ variable "name" {}
 variable "environment" {}
 variable "vpc_id" {}
 variable "cidr_block" {}
-variable "subnet_ids" {}
+variable "subnet_id" {}
 variable "ec2_name" {}
 variable "ami_id" {}
 variable "instance_type" {}
@@ -13,7 +13,6 @@ variable "detailed_monitoring" {}
 variable "stop_protection" {}
 variable "termination_protection" {}
 variable "source_dest_check" {}
-variable "instance_profile" {}
 variable "key_name" {}
 variable "user_data" {}
 variable "delete_volumes_on_termination" {}

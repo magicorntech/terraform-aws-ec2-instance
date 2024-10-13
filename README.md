@@ -5,13 +5,13 @@ Magicorn made Terraform Module for AWS Provider
 ```
 module "ec2-instance" {
   source      = "magicorntech/ec2-instance/aws"
-  version     = "0.0.4"
+  version     = "0.0.5"
   tenant      = var.tenant
   name        = var.name
   environment = var.environment
   vpc_id      = module.vpc.vpc_id
   cidr_block  = module.vpc.cidr_block
-  subnet_ids  = module.vpc.pbl_subnet_ids
+  subnet_id   = module.vpc.pbl_subnet_ids[0]
 
   ##### EC2 Configuration
   ec2_name                    = "pritunl"
@@ -23,7 +23,6 @@ module "ec2-instance" {
   stop_protection             = true
   termination_protection      = true
   source_dest_check           = false
-  instance_profile            = null # can be arn or null
   key_name                    = module.kms.ec2_key_pair_name[0] # can be null
   user_data                   = null # can be user-data or null
 
