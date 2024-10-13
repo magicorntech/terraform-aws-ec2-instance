@@ -10,7 +10,7 @@ resource "aws_instance" "main" {
   source_dest_check           = var.source_dest_check
   iam_instance_profile        = var.instance_profile
   key_name                    = var.key_name
-  user_data                   = (var.user_data) ? var.user_data : null
+  user_data                   = var.user_data
   tenancy                     = "default"
 
   credit_specification {

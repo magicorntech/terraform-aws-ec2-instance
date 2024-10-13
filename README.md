@@ -23,9 +23,9 @@ module "ec2-instance" {
   stop_protection             = true
   termination_protection      = true
   source_dest_check           = false
-  instance_profile            = null # can be null
+  instance_profile            = null # can be arn or null
   key_name                    = module.kms.ec2_key_pair_name[0] # can be null
-  user_data                   = false # can be false
+  user_data                   = null # can be user-data or null
 
   ##### EBS Configuration
   encryption  = true
