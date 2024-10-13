@@ -2,7 +2,7 @@
 resource "aws_eip" "main" {
   count      = (var.create_eip == true) ? 1 : 0
   instance   = aws_instance.main.id 
-  vpc        = true
+  domain     = true
 
   lifecycle {
     prevent_destroy = true

@@ -5,7 +5,7 @@ Magicorn made Terraform Module for AWS Provider
 ```
 module "ec2-instance" {
   source      = "magicorntech/ec2-instance/aws"
-  version     = "0.0.3"
+  version     = "0.0.4"
   tenant      = var.tenant
   name        = var.name
   environment = var.environment
