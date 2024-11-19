@@ -1,5 +1,5 @@
 resource "aws_iam_role" "main" {
-  name = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-role-${var.environment}"
+  name = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-role-${random_id.iam.hex}-${var.environment}"
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -18,7 +18,7 @@ resource "aws_iam_role" "main" {
   })
 
   tags = {
-    Name        = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-role-${var.environment}"
+    Name        = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-role-${random_id.iam.hex}-${var.environment}"
     Tenant      = var.tenant
     Project     = var.name
     Environment = var.environment
@@ -28,17 +28,17 @@ resource "aws_iam_role" "main" {
 }
 
 resource "aws_iam_policy_attachment" "main" {
-  name       = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-attach-${var.environment}"
+  name       = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-attach-${random_id.iam.hex}-${var.environment}"
   roles      = [aws_iam_role.main.name]
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 resource "aws_iam_instance_profile" "main" {
-  name = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-ip-${var.environment}"
+  name = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-ip-${random_id.iam.hex}-${var.environment}"
   role = aws_iam_role.main.name
 
   tags = {
-    Name        = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-ip-${var.environment}"
+    Name        = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-ip-${random_id.iam.hex}-${var.environment}"
     Tenant      = var.tenant
     Project     = var.name
     Environment = var.environment
