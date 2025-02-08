@@ -27,9 +27,8 @@ resource "aws_iam_role" "main" {
   }
 }
 
-resource "aws_iam_policy_attachment" "main" {
-  name       = "${var.tenant}-${var.name}-ec2-${var.ec2_name}-attach-${random_id.iam.hex}-${var.environment}"
-  roles      = [aws_iam_role.main.name]
+resource "aws_iam_role_policy_attachment" "main" {
+  role       = aws_iam_role.main.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
