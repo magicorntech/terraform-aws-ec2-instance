@@ -5,13 +5,15 @@ Magicorn made Terraform Module for AWS Provider
 ```
 module "ec2-instance" {
   source      = "magicorntech/ec2-instance/aws"
-  version     = "0.1.0"
+  version     = "0.2.0"
   tenant      = var.tenant
   name        = var.name
   environment = var.environment
   vpc_id      = module.vpc.vpc_id
   cidr_block  = module.vpc.cidr_block
   subnet_id   = module.vpc.pbl_subnet_ids[0]
+  encryption  = true
+  kms_key_id  = module.kms.ec2_key_id[0]
 
   ##### EC2 Configuration
   ec2_name                    = "pritunl"
@@ -27,22 +29,29 @@ module "ec2-instance" {
   user_data                   = null # can be user-data or null
 
   ##### EBS Configuration
-  encryption  = true
-  kms_key_id  = module.kms.ec2_key_id[0]
   delete_volumes_on_termination = true
   
   # Root Volume Configuration
-  root_volume_type = "gp3" # can be null
-  root_volume_size = 10    # can be null
+  root_volume_type = "gp2" # can be null
+  root_volume_size = 25    # can be null
   root_throughput  = null  # can be null
   root_iops        = null  # can be null
 
-  # Additional Volume Configuration (only one)
-  ebs_device_name = "sda2"
-  ebs_volume_type = "gp2" # can be null
-  ebs_volume_size = 0     # if 0 - no additional disk created
-  ebs_throughput  = null  # can be null
-  ebs_iops        = null  # can be null
+  # Additional Volume Configuration (you may set empty map {})
+  data_disks = {
+    xvdb = {
+      ebs_volume_type = "gp3"
+      ebs_volume_size = 50
+      ebs_throughput  = 125
+      ebs_iops        = 3000
+    },
+    xvdd = {
+      ebs_volume_type = "gp3"
+      ebs_volume_size = 100
+      ebs_throughput  = 125
+      ebs_iops        = 3000
+    }
+  }
 
   # Security Group Configuration
   ingress = [

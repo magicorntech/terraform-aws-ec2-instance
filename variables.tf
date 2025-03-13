@@ -4,6 +4,8 @@ variable "environment" {}
 variable "vpc_id" {}
 variable "cidr_block" {}
 variable "subnet_id" {}
+variable "encryption" {}
+variable "kms_key_id" {}
 variable "ec2_name" {}
 variable "ami_id" {}
 variable "instance_type" {}
@@ -16,15 +18,9 @@ variable "source_dest_check" {}
 variable "key_name" {}
 variable "user_data" {}
 variable "delete_volumes_on_termination" {}
-variable "encryption" {}
-variable "kms_key_id" {}
 variable "root_volume_type" {}
 variable "root_volume_size" {}
 variable "root_throughput" {}
 variable "root_iops" {}
-variable "ebs_device_name" {}
-variable "ebs_volume_type" {}
-variable "ebs_volume_size" {}
-variable "ebs_throughput" {}
-variable "ebs_iops" {}
+variable "data_disks" {}
 variable "ingress" {}
